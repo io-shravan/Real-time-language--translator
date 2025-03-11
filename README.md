@@ -9,7 +9,7 @@ Streamlit UI Module
 Pygame Module
 Googletrans (v3.1.0a0 Recommended)
 
- 04 Setup
+ 03 Setup
  
  Step 01: Navigate to the following directory.
 cmd line:- language-translator-bot/docs/requirements.txt
@@ -17,7 +17,7 @@ cmd line:- language-translator-bot/docs/requirements.txt
  Step 02: Run this command to install all dependencies.
 cmd line:- pip install -r requirements.txt
  
- 05 Usage
+ 04 Usage
  
  Step 02: Navigate to the source directory.
 cmd line:- language-translator-bot/soruce/main.py
