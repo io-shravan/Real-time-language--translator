@@ -6,7 +6,7 @@ import speech_recognition as sr
 from gtts import gTTS
 from googletrans import LANGUAGES, Translator
 
-
+# Background styling
 st.markdown(
     """
     <style>
@@ -19,15 +19,15 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
+# Initialize translator and pygame
 translator = Translator()
 pygame.mixer.init()
 
-
+# Session state to store transcript
 if 'transcript' not in st.session_state:
     st.session_state.transcript = []
 
-
+# Create language mapping
 language_mapping = {name: code for code, name in LANGUAGES.items()}
 
 def get_language_code(language_name):
@@ -43,10 +43,10 @@ def text_to_voice(text_data, to_language):
     audio.play()
     os.remove("cache_file.mp3")
 
-
+# Control flag
 isTranslateOn = False
 
-
+# Main processing loop
 def main_process(output_placeholder, from_language, to_language):
     global isTranslateOn
 
@@ -92,28 +92,28 @@ def main_process(output_placeholder, from_language, to_language):
                 "translated": translated_text.text
             })
 
-\
+            # Speak it
             text_to_voice(translated_text.text, to_language)
 
         except Exception as e:
             print("Error:", e)
 
-
+# --- UI Layout ---
 st.title("Language Translator")
 
-
+# Dropdowns
 from_language_name = st.selectbox("Select Source Language:", list(LANGUAGES.values()))
 to_language_name = st.selectbox("Select Target Language:", list(LANGUAGES.values()))
 
-
+# Convert names to codes
 from_language = get_language_code(from_language_name)
 to_language = get_language_code(to_language_name)
 
-
+# Start and Stop buttons
 start_button = st.button("Speak Now")
 stop_button = st.button("Stop")
 
-
+# Processing logic
 if start_button:
     if not isTranslateOn:
         isTranslateOn = True
@@ -122,8 +122,10 @@ if start_button:
 
 if stop_button:
     isTranslateOn = False
+    # Optionally clear transcript here if you want:
+    # st.session_state.transcript.clear()
 
-
+# --- Transcript Section ---
 if st.session_state.transcript:
     st.markdown("---")
     st.subheader("Transcript")
@@ -137,6 +139,8 @@ if st.session_state.transcript:
             """,
             unsafe_allow_html=True
         )
+
+# Footer
 st.markdown(
     """
      <style>
