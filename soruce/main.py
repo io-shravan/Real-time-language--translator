@@ -1,6 +1,5 @@
 import os
 import time
-import pygame
 import streamlit as st
 import speech_recognition as sr
 from gtts import gTTS
@@ -19,9 +18,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Initialize translator and pygame
+# Initialize translator
 translator = Translator()
-pygame.mixer.init()
 
 # Session state to store transcript
 if 'transcript' not in st.session_state:
@@ -39,8 +37,8 @@ def translator_function(spoken_text, from_language, to_language):
 def text_to_voice(text_data, to_language):
     myobj = gTTS(text=text_data, lang=to_language, slow=False)
     myobj.save("cache_file.mp3")
-    audio = pygame.mixer.Sound("cache_file.mp3")
-    audio.play()
+    with open("cache_file.mp3", "rb") as audio_file:
+        st.audio(audio_file.read(), format="audio/mp3")
     os.remove("cache_file.mp3")
 
 # Control flag
@@ -122,8 +120,6 @@ if start_button:
 
 if stop_button:
     isTranslateOn = False
-    # Optionally clear transcript here if you want:
-    # st.session_state.transcript.clear()
 
 # --- Transcript Section ---
 if st.session_state.transcript:
